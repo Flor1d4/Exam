@@ -110,6 +110,7 @@ namespace mbFinEx1s
 
         private static void AddWord(Dictionary<string, List<string>> dictionary)
         {
+            LogManager.GetCurrentClassLogger().Info("AddWord started");
             Console.WriteLine("Введите слово на русском/english:");
             string ruWord = Console.ReadLine().ToLower();
             if (dictionary.ContainsKey(ruWord))//Затем метод проверяет, существует ли уже в словаре ключ
@@ -120,7 +121,7 @@ namespace mbFinEx1s
             Console.WriteLine("Введите перевод этого слова на русском/english. При наличии нескольких переводов, разделите их запятой ( , ):");
             string[] englishWords = Console.ReadLine().Split(',');//
             List<string> englishList = new List<string>();
-            foreach (string englishWord in englishWords)
+            foreach (string englishWord in englishWords)//благодаря foreeach не исп LINQ
             {
                 englishList.Add(englishWord.Trim().ToLower());//Каждое английское слово удаляет пробельные символы с помощью метода Trim и приводится к нижнему регистру с помощью метода ToLower.
             }
@@ -130,6 +131,7 @@ namespace mbFinEx1s
 
         private static void ReplaceWord(Dictionary<string, List<string>> dictionary)
         {
+            LogManager.GetCurrentClassLogger().Info("ReplaceWord started");
             Console.Write("Введите слово на русском: ");
             string ruWord = Console.ReadLine().ToLower();
 
@@ -151,6 +153,7 @@ namespace mbFinEx1s
 
         private static void RemoveWord(Dictionary<string, List<string>> dictionary)//принимает словарь dictionary в качестве аргумента и не возвращает значения (потому что его тип возвращаемого значения равен void)
         {
+            LogManager.GetCurrentClassLogger().Info("RemoveeWord started");
             Console.Write("Введите слово на русском: ");
             string ruWord = Console.ReadLine().ToLower();//читаетв веденную  строку  и сохраняет ее в переменной ruWord, приводя ее к нижнему регистру
 
@@ -168,6 +171,7 @@ namespace mbFinEx1s
 
         private static void SearchWord(Dictionary<string, List<string>> dict)
         {
+            LogManager.GetCurrentClassLogger().Info("SearchWord started");
             Console.WriteLine("Введите слово для поиска:");
             string word = Console.ReadLine();//читает строку, введенную пользователем, и сохраняет ее в переменной word
 
@@ -190,6 +194,7 @@ namespace mbFinEx1s
 
         private static void SaveDictionaryToFile(Dictionary<string, List<string>> dictionary, string filename)
         {
+            LogManager.GetCurrentClassLogger().Info("SaveDictionaryToFile started");
             using (StreamWriter sw = new StreamWriter(filename))
             {
                 foreach (KeyValuePair<string, List<string>> kvp in dictionary)
@@ -212,31 +217,32 @@ namespace mbFinEx1s
 
         private static void ExportDictionaryToFile(Dictionary<string, List<string>> dictionary)
         {
+            LogManager.GetCurrentClassLogger().Info("ExportDictionaryToFile started");
             Console.WriteLine("Введите путь к файлу для экспорта словарика:");
 
             string filePath = Console.ReadLine();
 
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath))
+                using (StreamWriter writer = new StreamWriter(filePath))//использует using для создания объекта StreamWriter с именем write который будет использоватся для записи в файл путем filePath
                 {
-                    foreach (KeyValuePair<string, List<string>> pair in dictionary)
+                    foreach (KeyValuePair<string, List<string>> pair in dictionary)//перебирает все ключ-значение пары в словаре dictionary
                     {
-                        writer.Write(pair.Key + " - ");
-
-                        foreach (string translation in pair.Value)
+                        writer.Write(pair.Key + " - ");//записывает на диск ключ словаря, за которым следует тире и пробел
+                        foreach (string translation in pair.Value)//перебирает все значения (список переводов) для данного ключа
                         {
-                            writer.Write(translation + ", ");
+                            writer.Write(translation + ", ");//записывает на диск каждый перевод, за которым следует запятая и пробел
                         }
 
                         writer.WriteLine();
                     }
-
+                    log.Info("Export done");
                     Console.WriteLine($"Словарик успешно экспортирован в файл {filePath}");
                 }
             }
             catch (Exception ex)
             {
+                log.Warn("Error of export");
                 Console.WriteLine($"Ошибка при экспорте словарика: {ex.Message}");
             }
         }
