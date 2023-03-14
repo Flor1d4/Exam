@@ -21,9 +21,7 @@ namespace mbFinEx1s
             log.Info("Downloading of Programme 3sec.");
             Console.WriteLine("Загрузка...");
             Thread.Sleep(3000);
-            log.Info("Programme started.");
-            while (true)
-            {
+            log.Info("Programme started.");          
 
                 Console.WriteLine("\nМеню Словарика:\n");
                 Console.WriteLine("1. Добавить слово в словарик\n");
@@ -80,7 +78,7 @@ namespace mbFinEx1s
                 }
 
                 Console.WriteLine();
-            }
+            
         }
 
 
