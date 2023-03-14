@@ -11,6 +11,7 @@ namespace mbFinEx1s
         static Logger log=LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
+            log.Info("-------------new start--------------");
             log.Info("Start of Programme.");            
             Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>();
             string filename = "dictionary.txt";
